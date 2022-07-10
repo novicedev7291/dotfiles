@@ -73,6 +73,7 @@ vim.o.completeopt = 'menu,menuone,noselect,noinsert,preview'
 -- Set the number of lines to be visible above and below of cursor always
 vim.o.scrolloff = 8
 
+
 --Remap for dealing with word wrap
 vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
 vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
@@ -86,10 +87,30 @@ vim.cmd [[
 ]]
 
 
+
 -- LSP config mappings
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
+
+-- Set nop for arrow keys
+vim.api.nvim_set_keymap('n', '<up>', '<nop>', opts)
+vim.api.nvim_set_keymap('n', '<down>', '<nop>', opts)
+vim.api.nvim_set_keymap('i', '<up>', '<nop>', opts)
+vim.api.nvim_set_keymap('i', '<down>', '<nop>', opts)
+vim.api.nvim_set_keymap('i', '<left>', '<nop>', opts)
+vim.api.nvim_set_keymap('i', '<right>', '<nop>', opts)
+
+-- Set left/right to switch b/wn prev and next buffer
+vim.api.nvim_set_keymap('n', '<left>', ':bp<CR>', opts)
+vim.api.nvim_set_keymap('n', '<right>', ':bn<CR>', opts)
+
+-- Map Ctrl+j, Ctrl + c to escape
+vim.api.nvim_set_keymap('n', '<c-j>', '<Esc>', opts)
+vim.api.nvim_set_keymap('v', '<c-j>', '<Esc>', opts)
+vim.api.nvim_set_keymap('i', '<c-c>', '<Esc>', opts)
+vim.api.nvim_set_keymap('v', '<c-c>', '<Esc>', opts)
+
 vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
