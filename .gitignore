@@ -1,0 +1,11 @@
+**/*
+!.aliases
+!.tmux.conf
+!.config/init.lua
+!.config/nvim
+!.config
+!.vimrc
+!.config/nvim/**
+.config/nvim/plugin
+**/.DS_Store
+!.gitignore
