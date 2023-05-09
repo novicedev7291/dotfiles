@@ -60,12 +60,10 @@ require("lspconfig").rust_analyzer.setup({
                 prefix = "self",
             },
             cargo = {
-                buildScripts = {
-                    enable = true,
-                },
+                allFeatures = true,
             },
             procMacro = {
-                enable = true
+                enable = false
             },
             checkOnSave = {
                 command = "clippy",
@@ -94,3 +92,4 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
   group = format_sync_grp,
 })
+
