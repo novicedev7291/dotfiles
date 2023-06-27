@@ -46,4 +46,10 @@ return require('packer').startup(function(use)
   }
   use 'tpope/vim-fugitive'
   use 'vim-scripts/auto-pairs-gentle'
+
+  --Debugging support
+  use 'mfussenegger/nvim-dap'
+  use 'theHamsta/nvim-dap-virtual-text'
+  use 'rcarriga/nvim-dap-ui'
+  use 'mfussenegger/nvim-dap-python'
 end)
