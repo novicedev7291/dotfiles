@@ -41,3 +41,10 @@ vim.keymap.set("n", "<leader>f", function()
 end)
 
 vim.keymap.set("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<left><left><left>")
+
+--For nvim window increase decrease, these 
+--are mentioned in neovim docs
+vim.keymap.set("n", "<leader>h", "<C-w><")
+vim.keymap.set("n", "<leader>l", "<C-w>>")
+vim.keymap.set("n", "<leader>j", "<C-w>-")
+vim.keymap.set("n", "<leader>k", "<C-w>+")
