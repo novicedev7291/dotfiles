@@ -16,10 +16,11 @@ return require('packer').startup(function(use)
   use({
 	  'rose-pine/neovim',
 	  as = 'rose-pine',
-	  config = function()
-		  vim.cmd.colorscheme('rose-pine')
-	  end
+	  --config = function()
+	  --    vim.cmd.colorscheme('rose-pine')
+	  --end
   })
+  use 'rmehri01/onenord.nvim'
 
   -- Treesitter plugin to provide parsing capability for file type & colors accordingly
   use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate'})
