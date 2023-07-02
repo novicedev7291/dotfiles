@@ -1,7 +1,7 @@
 -- Map leader key to space
 vim.g.mapleader = " "
 
-vim.o.guicursor = ""
+vim.o.guicursor = "n-v-c-i-sm:block,i-ci-ve:block,r-cr-o:block"
 
 -- Make line numbers default
 vim.o.number = true
