@@ -6,6 +6,13 @@
 !.config
 !.vimrc
 !.config/nvim/**
+!.scripts
+!.scripts/**
 .config/nvim/plugin
+**/node_modules
+**/target
+**/.settings
+**/.classpath
+**/.venv
 **/.DS_Store
 !.gitignore

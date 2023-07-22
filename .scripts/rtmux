@@ -1,0 +1,21 @@
+#!/bin/bash
+
+SESSION_NAME=$1
+OPT_CMD=$2
+
+if [[ -z "$SESSION_NAME" ]]; then
+    echo "Invalid Arguments!! Correct usage: ./rtmux <your-session-name> <optional-dir-relative-path>"
+    return 1
+fi
+
+tmux has-session -t $SESSION_NAME &>/dev/null
+
+if [ $? != 0 ]; then
+    if [[ -n "$OPT_CMD" ]]; then
+        tmux new -s $SESSION_NAME -c "$OPT_CMD"
+    else
+        tmux new -s $SESSION_NAME
+    fi
+fi
+
+tmux attach -t $SESSION_NAME
