@@ -5,4 +5,8 @@ alias gcb="git checkout -b"
 alias gfo="git fetch origin"
 alias vi="nvim"
 alias gconfig="git --work-tree=$HOME --git-dir=$HOME/.dotconfigs/"
-alias projects="cd $PROJECTS_DIR && cd \$(find * -type d|fzf)"
+
+if [ -n "$PROJECTS_DIR" ]
+then
+    alias projects="cd $PROJECTS_DIR && cd \$(find * -type d|fzf)"
+fi
