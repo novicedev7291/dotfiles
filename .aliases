@@ -10,8 +10,15 @@ if [ -n "$PROJECTS_DIR" ]
 then
     if type rg &>/dev/null
     then
+        if [ -z "$RIPGREP_CONFIG_PATH" ]
+        then
+            echo "Set RIPGREP_CONFIG_PATH to $HOME/.ripgreprc"
+            exit
+        fi
         alias projects="cd $PROJECTS_DIR && cd \$(rg --files --sort-files --null 2>/dev/null | xargs -0 dirname |fzf)"
     else
         alias projects="cd $PROJECTS_DIR && cd \$(find * -type d !\( -path '*/target' -path '*/.idea' -path '*/.git' -path '*/node_modules' -path '*/.settings' -path '*/.venv' -prune \)|fzf)"
     fi
+else
+    echo "PROJECTS_DIR env variable not set"
 fi
