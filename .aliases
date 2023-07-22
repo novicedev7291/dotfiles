@@ -8,5 +8,10 @@ alias gconfig="git --work-tree=$HOME --git-dir=$HOME/.dotconfigs/"
 
 if [ -n "$PROJECTS_DIR" ]
 then
-    alias projects="cd $PROJECTS_DIR && cd \$(find * -type d|fzf)"
+    if type rg &>/dev/null
+    then
+        alias projects="cd $PROJECTS_DIR && cd \$(rg --files --sort-files --null 2>/dev/null | xargs -0 dirname |fzf)"
+    else
+        alias projects="cd $PROJECTS_DIR && cd \$(find * -type d !\( -path '*/target' -path '*/.idea' -path '*/.git' -path '*/node_modules' -path '*/.settings' -path '*/.venv' -prune \)|fzf)"
+    fi
 fi

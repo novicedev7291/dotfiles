@@ -8,11 +8,7 @@
 !.config/nvim/**
 !.scripts
 !.scripts/**
+!.ripgreprc
 .config/nvim/plugin
-**/node_modules
-**/target
-**/.settings
-**/.classpath
-**/.venv
-**/.DS_Store
+.DS_Store
 !.gitignore

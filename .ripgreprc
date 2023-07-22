@@ -1,0 +1,7 @@
+--no-hidden
+
+--glob=!.git/*
+--glob=!.idea/*
+--glob=!target/
+--glob=!.settings/
+--glob=!node_modules/
