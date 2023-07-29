@@ -13,7 +13,7 @@ then
         if [ -z "$RIPGREP_CONFIG_PATH" ]
         then
             echo "Set RIPGREP_CONFIG_PATH to $HOME/.ripgreprc"
-            exit
+            return 1
         fi
         alias projects="cd $PROJECTS_DIR && cd \$(rg --files --sort-files --null 2>/dev/null | xargs -0 dirname |fzf)"
     else
