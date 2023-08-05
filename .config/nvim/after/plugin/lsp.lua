@@ -9,6 +9,7 @@ lsp.ensure_installed({
 	"rust_analyzer"
 })
 
+
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
@@ -19,6 +20,7 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 })
 local cmp_completion = {
     autocomplete = false
+--    autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },
 }
 
 lsp.set_preferences({
@@ -44,6 +46,7 @@ local function on_attach(_, bufnr)
 	vim.keymap.set('n', '[d', function() vim.diagnostic.goto_next() end, opts)
 	vim.keymap.set('n', ']d', function() vim.diagnostic.goto_prev() end, opts)
 	vim.keymap.set('n', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
+    vim.keymap.set('n', '<C-l>', function() vim.diagnostic.setloclist() end, opts)
 
 end
 
@@ -86,7 +89,7 @@ vim.diagnostic.config({
 
 local format_sync_grp = vim.api.nvim_create_augroup("Format", {})
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.rs",
+  pattern = { "*.rs", "*.ts", "*.js", "*.py"},
   callback = function()
     vim.lsp.buf.format({ timeout_ms = 100 })
   end,
