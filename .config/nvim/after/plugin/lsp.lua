@@ -66,7 +66,7 @@ require("lspconfig").rust_analyzer.setup({
                 allFeatures = true,
             },
             procMacro = {
-                enable = false
+                enable = true
             },
             checkOnSave = {
                 command = "clippy",
