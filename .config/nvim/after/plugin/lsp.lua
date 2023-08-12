@@ -75,6 +75,8 @@ require("lspconfig").rust_analyzer.setup({
     }
 })
 
+require("lspconfig").terraformls.setup{}
+
 lsp.setup()
 
 vim.diagnostic.config({
@@ -86,10 +88,9 @@ vim.diagnostic.config({
   float = true,
 })
 
-
 local format_sync_grp = vim.api.nvim_create_augroup("Format", {})
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = { "*.rs", "*.ts", "*.js", "*.py"},
+  pattern = { "*.rs", "*.ts", "*.js", "*.py", "*.tf", "*.tfvars"},
   callback = function()
     vim.lsp.buf.format({ timeout_ms = 100 })
   end,
