@@ -33,32 +33,39 @@ M.defaults = {
     cmd_args = ""
 }
 
----Initialises the module with options.
----`@param: opts {
----    name = "", --name of external formatter
----    cmd_args = ""
---- }`
-M.setup = function(opts)
-    M.defaults = vim.tbl_extend("force", M.defaults, opts)
+local load_formatter = function()
     local path = cache[M.defaults.name]
     if not path then
         local bin = find_bin_in_path(M.defaults.name)
         log.debug("Binary found at path <>", bin)
         if bin == nil then
-            log.error("Formatter not available in path..doing nothing")
+            log.debug("Formatter not available in path..doing nothing")
             return
         end
         cache[M.defaults.name] = bin
-        path = cache[M.defaults.name]
     end
 end
 
----Format the given buffer number or file using configured external formatter.
----Please make sure the formatter is available on `PATH` variable.
----
----`@param opts table of
----     - buf: buffer number (integer)
----     - file: filename (string)`
+--[[
+Initialises the module with options.
+@param: opts {
+    name = "", --name of external formatter
+    cmd_args = ""
+ }
+--]]
+M.setup = function(opts)
+    M.defaults = vim.tbl_extend("force", M.defaults, opts)
+    load_formatter()
+end
+
+--[[
+Format the given buffer number or file using configured external formatter.
+Please make sure the formatter is available on `PATH` variable.
+
+@param opts table of
+     - buf: buffer number (integer)
+     - file: filename (string) --not supported yet!
+--]]
 M.format = function(opts)
     local path = cache[M.defaults.name]
     if path == nil then

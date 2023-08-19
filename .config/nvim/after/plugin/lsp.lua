@@ -117,7 +117,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     group = format_sync_grp,
 })
 
-local blackf = require('kuldeep.blackf').setup { name = "black" }
+local blackf = require('kuldeep.non-lsp-formatter')
+if blackf ~= nil then
+    blackf.setup { name = "black" }
+end
+
 local log = require('consolelog').setup { name = "CustomLSPFormatter" }
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = { "*.py" },
