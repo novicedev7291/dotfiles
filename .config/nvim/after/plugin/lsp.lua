@@ -116,3 +116,18 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
     group = format_sync_grp,
 })
+
+local blackf = require('kuldeep.blackf').setup { name = "black" }
+local log = require('consolelog').setup { name = "CustomLSPFormatter" }
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = { "*.py" },
+    callback = function(ev)
+        local bufnr_str = ev.buf
+        if blackf ~= nil then
+            blackf.format({ buf = tonumber(bufnr_str) })
+        else
+            log.error("Could not load blackf module")
+        end
+    end,
+    group = format_sync_grp
+})
