@@ -1,3 +1,10 @@
+-- To reload buffer if file changes on disk
+vim.o.autoread = true
+vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+    command = "if mode() != 'c' | checktime | endif",
+    pattern = { "*.py" },
+})
+
 local log = require("consolelog").setup { name = "Black_Formatter" }
 
 local path_in_dir = function(dir_path, name)
@@ -11,7 +18,9 @@ end
 local find_bin_in_path = function(name)
     local paths
     local os_name = vim.loop.os_uname().sysname
-    if os_name ~= nil and string.match(os_name, "[Dd]arwin") ~= nil then
+    log.fdebug("OS name is <>", os_name)
+    local nix_rgx = vim.regex("[darwin|linux]")
+    if os_name ~= nil and nix_rgx:match_str(os_name:lower()) ~= nil then
         -- PATH separater will be `:`
         paths = vim.split(vim.env.PATH, ":", { trimempty = true })
         for _, path in pairs(paths) do
@@ -37,11 +46,11 @@ local load_formatter = function()
     local path = cache[M.defaults.name]
     if not path then
         local bin = find_bin_in_path(M.defaults.name)
-        log.debug("Binary found at path <>", bin)
         if bin == nil then
             log.debug("Formatter not available in path..doing nothing")
             return
         end
+        log.ftrace("Formatter available at path <>", bin)
         cache[M.defaults.name] = bin
     end
 end
@@ -74,9 +83,11 @@ M.format = function(opts)
     end
 
     local handle, pid = vim.loop.spawn(path, { args = { vim.api.nvim_buf_get_name(opts.buf) } }, function(code, _)
-        log.trace("Exit status", code)
+        if code ~= 0 then
+            print("Formatter failed to convert, process exited with exit code", code)
+        end
     end)
-    log.trace("Process handle", handle, pid)
+    log.ftrace("Process handle", handle, pid)
 end
 
 return M
