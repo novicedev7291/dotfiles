@@ -87,6 +87,11 @@ if groovyls ~= nil then
     }
 end
 
+local gopls = require("lspconfig").gopls
+if gopls ~= nil then
+    gopls.setup {}
+end
+
 lsp.setup()
 
 vim.diagnostic.config({
@@ -100,7 +105,7 @@ vim.diagnostic.config({
 
 local format_sync_grp = vim.api.nvim_create_augroup("Format", {})
 vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = { "*.rs", "*.ts", "*.js", "*.tf", "*.tfvars", "*.lua" },
+    pattern = { "*.rs", "*.ts", "*.js", "*.tf", "*.tfvars", "*.lua", "*.go", "*.gomod" },
     callback = function(ev)
         local buffer = ev.buf
         local ft = vim.filetype.match({ buf = tonumber(buffer) })
@@ -119,7 +124,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 local blackf = require('kuldeep.non-lsp-formatter')
 if blackf ~= nil then
-    blackf.setup { name = "black" }
+    blackf.setup { name = "black", cmd_args = "-S" }
 end
 
 local log = require('consolelog').setup { name = "CustomLSPFormatter" }

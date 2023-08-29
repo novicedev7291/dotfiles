@@ -82,7 +82,12 @@ M.format = function(opts)
         return
     end
 
-    local handle, pid = vim.loop.spawn(path, { args = { vim.api.nvim_buf_get_name(opts.buf) } }, function(code, _)
+    local args = { args = { vim.api.nvim_buf_get_name(opts.buf) } }
+    if M.defaults.cmd_args ~= "" then
+        args = { args = { M.defaults.cmd_args, vim.api.nvim_buf_get_name(opts.buf) } }
+    end
+
+    local handle, pid = vim.loop.spawn(path, args, function(code, _)
         if code ~= 0 then
             print("Formatter failed to convert, process exited with exit code", code)
         end
