@@ -24,6 +24,7 @@ return require('packer').startup(function(use)
 
     -- Treesitter plugin to provide parsing capability for file type & colors accordingly
     use('nvim-treesitter/nvim-treesitter', { tag = 'v0.8.5', lock = true })
+    use 'nvim-treesitter/nvim-treesitter-context'
     use {
         'VonHeikemen/lsp-zero.nvim',
         requires = {
