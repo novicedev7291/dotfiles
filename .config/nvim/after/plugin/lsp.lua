@@ -89,7 +89,9 @@ end
 
 local gopls = require("lspconfig").gopls
 if gopls ~= nil then
-    gopls.setup {}
+    gopls.setup {
+        on_attach = on_attach
+    }
 end
 
 lsp.setup()
