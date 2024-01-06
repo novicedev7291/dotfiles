@@ -94,6 +94,13 @@ if gopls ~= nil then
     }
 end
 
+local tsserver = require("lspconfig").tsserver
+if tsserver ~= nil then
+    tsserver.setup {
+        on_attach = on_attach
+    }
+end
+
 lsp.setup()
 
 vim.diagnostic.config({
