@@ -101,6 +101,13 @@ if tsserver ~= nil then
     }
 end
 
+local clangd = require("lspconfig").clangd
+if clangd ~= nil then
+    clangd.setup {
+        on_attach = on_attach
+    }
+end
+
 lsp.setup()
 
 vim.diagnostic.config({
