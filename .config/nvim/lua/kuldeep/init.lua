@@ -1,4 +1,5 @@
 require("kuldeep.set")
 require("kuldeep.remap")
 require("kuldeep.filetype")
-require("kuldeep.packer")
+--require("kuldeep.packer")
+require("kuldeep.lazy")
