@@ -68,6 +68,15 @@ local plugins = {
 
     --personal logging plugin
     "novicedev7291/consolelog.nvim",
+    {
+        "github/copilot.vim",
+        enabled = function()
+            if not vim.env.USE_COPILOT then
+                return false
+            end
+            return true
+        end
+    }
 }
 
 require("lazy").setup(plugins)
