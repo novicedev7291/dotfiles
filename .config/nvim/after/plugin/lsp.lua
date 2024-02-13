@@ -2,14 +2,6 @@ local lsp = require('lsp-zero')
 
 lsp.preset('recommended')
 
-lsp.ensure_installed({
-    --	"eslint",
-    --	"sumneko_lua",
-    --	"tsserver",
-    "rust_analyzer"
-})
-
-
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
@@ -27,7 +19,7 @@ lsp.set_preferences({
     sign_icons = {}
 })
 
-lsp.setup_nvim_cmp({
+cmp.setup({
     completion = cmp_completion,
     mapping = cmp_mappings
 })
@@ -51,62 +43,79 @@ end
 
 lsp.on_attach(on_attach)
 
-require("lspconfig").rust_analyzer.setup({
-    on_attach = on_attach,
-    settings = {
-        ["rust-analyzer"] = {
-            imports = {
-                granularity = {
-                    group = "module",
-                },
-                prefix = "self",
-            },
-            cargo = {
-                allFeatures = true,
-            },
-            procMacro = {
-                enable = true
-            },
-            checkOnSave = {
-                command = "clippy",
-            },
-        }
-    }
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  -- Replace the language servers listed here 
+  -- with the ones you want to install
+  -- ensure_installed = {'tsserver', 'rust_analyzer'},
+  handlers = {
+    lsp.default_setup,
+    rust_analyzer = function()
+        require("lspconfig").rust_analyzer.setup({
+            on_attach = on_attach,
+            settings = {
+                ["rust-analyzer"] = {
+                    imports = {
+                        granularity = {
+                            group = "module",
+                        },
+                        prefix = "self",
+                    },
+                    cargo = {
+                        allFeatures = true,
+                    },
+                    procMacro = {
+                        enable = true
+                    },
+                    checkOnSave = {
+                        command = "clippy",
+                    },
+                }
+            }
+        })
+    end,
+    terraformls = function()
+        local terraformls = require("lspconfig").terraformls
+        if terraformls ~= nil then
+            terraformls.setup {}
+        end
+    end,
+    groovyls = function()
+        local groovyls = require("lspconfig").groovyls
+        if groovyls ~= nil then
+            groovyls.setup {
+                on_attach = on_attach,
+                filetypes = { "groovy" }
+            }
+        end
+    end,
+    gopls = function()
+        local gopls = require("lspconfig").gopls
+        if gopls ~= nil then
+            gopls.setup {
+                on_attach = on_attach
+            }
+        end
+    end,
+    tsserver = function()
+        local tsserver = require("lspconfig").tsserver
+        if tsserver ~= nil then
+            tsserver.setup {
+                on_attach = on_attach
+            }
+        end
+    end,
+    clangd = function()
+        local clangd = require("lspconfig").clangd
+        if clangd ~= nil then
+            clangd.setup {
+                on_attach = on_attach
+            }
+        end
+    end,
+},
 })
 
-local terraformls = require("lspconfig").terraformls
-if terraformls ~= nil then
-    terraformls.setup {}
-end
-
-local groovyls = require("lspconfig").groovyls
-if groovyls ~= nil then
-    groovyls.setup {
-        on_attach = on_attach,
-        filetypes = { "groovy" }
-    }
-end
-
-local gopls = require("lspconfig").gopls
-if gopls ~= nil then
-    gopls.setup {
-        on_attach = on_attach
-    }
-end
-
-local tsserver = require("lspconfig").tsserver
-if tsserver ~= nil then
-    tsserver.setup {
-        on_attach = on_attach
-    }
-end
-
-local clangd = require("lspconfig").clangd
-if clangd ~= nil then
-    clangd.setup {
-        on_attach = on_attach
-    }
-end
 
 lsp.setup()
 
