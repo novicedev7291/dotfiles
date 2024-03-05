@@ -5,6 +5,7 @@ alias gcb="git checkout -b"
 alias gfo="git fetch origin"
 alias vi="nvim"
 alias gconfig="git --work-tree=$HOME --git-dir=$HOME/.dotconfigs/"
+alias tmxa="tmux attach -t $2"
 
 if [ -n "$PROJECTS_DIR" ]
 then
@@ -15,10 +16,16 @@ then
             echo "Set RIPGREP_CONFIG_PATH to $HOME/.ripgreprc"
             return 1
         fi
+        # `rg --files --sort-files --null` would return all files path in current dir sorted, `--null` flag would replace the `\n` at the end with null char `\0`
+        # Then xargs would take each path and give it to `dirname` command to pick the file directory name only
+        # `fzf` would then fuzzy find every file in that directory only.
         alias projects="cd $PROJECTS_DIR && cd \$(rg --files --sort-files --null 2>/dev/null | xargs -0 dirname |fzf)"
     else
+        # This tries to do the same as described above in case of `rg` using `find` but not exact since the ignore pattern is hardcoded
         alias projects="cd $PROJECTS_DIR && cd \$(find * -type d !\( -path '*/target' -path '*/.idea' -path '*/.git' -path '*/node_modules' -path '*/.settings' -path '*/.venv' -prune \)|fzf)"
     fi
 else
     echo "PROJECTS_DIR env variable not set"
 fi
+
+alias tmxn="tmux new -s $pwd"
