@@ -28,4 +28,4 @@ else
     echo "PROJECTS_DIR env variable not set"
 fi
 
-alias tmxn="tmux new -s $pwd"
+alias tmxn='tmux new -s $(echo $PWD | rev | cut -d / -f 1 | rev)-session'
