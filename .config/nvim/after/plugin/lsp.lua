@@ -142,6 +142,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     callback = function(ev)
         local buffer = ev.buf
         local ft = vim.filetype.match({ buf = tonumber(buffer) })
+        local terraformls = require("lspconfig").terraformls
 
         if ft == nil then
             print("Filetype not detected for formatting...")
