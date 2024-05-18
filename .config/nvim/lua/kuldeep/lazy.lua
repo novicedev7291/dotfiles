@@ -16,7 +16,7 @@ local plugins = {
     -- Telescope plugin for fuzzy finding and other awesome search optionremaps
     {
         "nvim-telescope/telescope.nvim",
-        version = "0.1.0",
+        version = "0.1.4",
         -- or                            , branch = "0.1.x",
         dependencies = {
             "nvim-lua/plenary.nvim",
@@ -63,7 +63,10 @@ local plugins = {
     --Debugging support
     "mfussenegger/nvim-dap",
     "theHamsta/nvim-dap-virtual-text",
-    "rcarriga/nvim-dap-ui",
+    {    
+        "rcarriga/nvim-dap-ui", 
+        dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"}
+    },
     "mfussenegger/nvim-dap-python",
 
     --personal logging plugin
