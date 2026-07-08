@@ -31,6 +31,9 @@ vim.o.shiftwidth = 4
 vim.o.smartindent = true
 vim.o.autoindent = true
 
+-- Split screen to right
+vim.o.splitright = true
+
 vim.o.wrap = false
 
 vim.o.updatetime = 50

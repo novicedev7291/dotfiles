@@ -8,10 +8,10 @@ set relativenumber
 set backspace=indent,eol,start
 
 " Enable comments in jsonc files
-autocmd FileType json syntax match Comment +\/\/.\+$+
+"autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " Load all plugins
-source ~/.vim/plugged.vim
+"source ~/.vim/plugged.vim
 
 " Load  keybindings
-source ~/.vim/keys.vim
+"source ~/.vim/keys.vim
