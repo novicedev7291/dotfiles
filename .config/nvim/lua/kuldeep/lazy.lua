@@ -16,7 +16,8 @@ local plugins = {
     -- Telescope plugin for fuzzy finding and other awesome search optionremaps
     {
         "nvim-telescope/telescope.nvim",
-        version = "0.1.4",
+        version = "v0.2.1",
+        -- version = "0.2.1"
         -- or                            , branch = "0.1.x",
         dependencies = {
             "nvim-lua/plenary.nvim",
