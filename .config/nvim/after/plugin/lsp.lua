@@ -1,10 +1,7 @@
-local lsp = require('lsp-zero')
-
-lsp.preset('recommended')
-
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lsp.defaults.cmp_mappings({
+
+local cmp_mappings = cmp.mapping.preset.insert({
     ['C-p'] = cmp.mapping.select_prev_item(cmp_select),
     ['C-n'] = cmp.mapping.select_next_item(cmp_select),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
@@ -15,14 +12,12 @@ local cmp_completion = {
     --    autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },
 }
 
-lsp.set_preferences({
-    sign_icons = {}
-})
-
 cmp.setup({
     completion = cmp_completion,
     mapping = cmp_mappings
 })
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local function on_attach(_, bufnr)
     local opts = { buffer = bufnr, remap = false }
@@ -41,7 +36,10 @@ local function on_attach(_, bufnr)
     vim.keymap.set('n', '<C-l>', function() vim.diagnostic.setloclist() end, opts)
 end
 
-lsp.on_attach(on_attach)
+vim.lsp.config('*', {
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
@@ -49,10 +47,8 @@ require('mason-lspconfig').setup({
     -- with the ones you want to install
     -- ensure_installed = {'tsserver', 'rust_analyzer'},
     handlers = {
-        lsp.default_setup,
         rust_analyzer = function()
-            require("lspconfig").rust_analyzer.setup({
-                on_attach = on_attach,
+            vim.lsp.config('rust_analyzer', {
                 settings = {
                     ["rust-analyzer"] = {
                         imports = {
@@ -74,58 +70,13 @@ require('mason-lspconfig').setup({
                 }
             })
         end,
-        terraformls = function()
-            local terraformls = require("lspconfig").terraformls
-            if terraformls ~= nil then
-                terraformls.setup {}
-            end
-        end,
         groovyls = function()
-            local groovyls = require("lspconfig").groovyls
-            if groovyls ~= nil then
-                groovyls.setup {
-                    on_attach = on_attach,
-                    filetypes = { "groovy" }
-                }
-            end
-        end,
-        gopls = function()
-            local gopls = require("lspconfig").gopls
-            if gopls ~= nil then
-                gopls.setup {
-                    on_attach = on_attach
-                }
-            end
-        end,
-        tsserver = function()
-            local tsserver = require("lspconfig").tsserver
-            if tsserver ~= nil then
-                tsserver.setup {
-                    on_attach = on_attach
-                }
-            end
-        end,
-        clangd = function()
-            local clangd = require("lspconfig").clangd
-            if clangd ~= nil then
-                clangd.setup {
-                    on_attach = on_attach
-                }
-            end
-        end,
-        ocamllsp = function()
-            local ocamllsp = require("lspconfig").ocamllsp
-            if ocamllsp ~= nil then
-                ocamllsp.setup {
-                    on_attach = on_attach
-                }
-            end
+            vim.lsp.config('groovyls', {
+                filetypes = { "groovy" }
+            })
         end,
     },
 })
-
-
-lsp.setup()
 
 vim.diagnostic.config({
     virtual_text = true,
