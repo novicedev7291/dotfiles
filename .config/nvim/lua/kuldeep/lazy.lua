@@ -40,10 +40,14 @@ local plugins = {
     },
     "nvim-treesitter/nvim-treesitter-context",
     -- LSP Support
-    "neovim/nvim-lspconfig",
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-
+    {
+        "mason-org/mason-lspconfig.nvim",
+        opts = {},
+        dependencies = {
+            { "mason-org/mason.nvim", opts = {} },
+            "neovim/nvim-lspconfig",
+        },
+    },
     -- Autocompletion
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-buffer",
